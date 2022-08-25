@@ -1,0 +1,67 @@
+/*
+Copyright 2006 Blizzard Entertainment, Inc.
+forums.worldofwarcraft.com master css
+*/
+
+body { background: #000 url('/images/wrath/theme-bg.jpg') repeat-x 100% 0 !important; }
+h1.wow-logo { background: url('/images/wrath/wowlogo.png') no-repeat !important; height: 122px !important; }
+#header { background: url('/images/wrath/top-tile.gif') repeat-x top; }
+.logo-container { background: url('/images/wrath/decor-left.gif') no-repeat left top !important; }
+.logo-right { background: url('/images/wrath/decor-right.gif') no-repeat right top !important;  }
+li.alliance { background: url('/images/toggle-alliance0.gif') no-repeat !important; }
+li.horde { background: url('/images/toggle-horde0.gif') no-repeat !important; }
+li.bc { background: url('/images/toggle-bc1.gif') no-repeat 0 -1px !important; }
+li.xmas { background: url('/images/toggle-xmas0.gif') no-repeat 0 -1px !important; }
+li.wrath { background: url('/images/toggle-wrath0.gif') no-repeat 0 -1px !important; }
+.bg-theme { background: url('/images/wrath/single-bg.jpg') no-repeat 100% 0 !important; height: 170px; }
+span.left-gryphon, span.right-gryphon { position: absolute; top: -92px; width: 115px; height: 92px; }
+span.left-gryphon { background: url('/images/wrath/gryphon-left.gif') no-repeat !important; }
+span.right-gryphon { background: url('/images/wrath/gryphon-right.gif') no-repeat !important; }
+#postbackground { background: #000 url('/images/wrath/forum-tile-left.jpg') repeat-y left top; }
+#postbackground .right { background: url('/images/wrath/forum-tile-right.jpg') repeat-y right top; }
+.gborder ul { background: url('/images/wrath/border-left.gif') repeat-y left; }
+.gborder ul li.bg { background: url('/images/wrath/border-right.gif') repeat-y right; }
+.gborder ul li div.a { background: url('/images/wrath/border-top.gif') repeat-x top; }
+.gborder ul li div.a ul { background: url('/images/wrath/border-bot.gif') repeat-x bottom; }
+.gborder ul li div.a ul li.bg { background: url('/images/wrath/border-top-left.gif') no-repeat top left; }
+.gborder ul li div.a ul li div.b { background: url('/images/wrath/border-top-right.gif') no-repeat top right; }
+.gborder ul li div.a ul li div.b ul { background: url('/images/wrath/border-bot-left.gif') no-repeat bottom left; }
+.gborder ul li div.a ul li div.b ul li.bg { background: url('/images/wrath/border-bot-right.gif') no-repeat bottom right; }
+.findex { background: url('/images/wrath/footer-forumindex-right-bot.gif') no-repeat; }
+#footerShell { background: url('/images/wrath/bottom-bg.gif') repeat-x bottom; }
+.forum-footer { background: url('/images/wrath/bottom-blizzlogo.gif') repeat-x; }
+#login { background: url('/images/wrath/login-bg.gif') no-repeat; }
+#login div.top { background: url('/images/wrath/login-top.gif') no-repeat; }
+#loginbuttons ul li.right { background: url('/images/wrath/login-bot-right.gif') no-repeat; }
+#loginbuttons ul li.help { background: url('/images/wrath/en_US/login-bot-help.gif') no-repeat; }
+#loginbuttons ul li.mid { background: url('/images/wrath/login-bot-mid.gif') no-repeat; }
+#loginbuttons ul li.login { background: url('/images/wrath/en_US/login-bot-login.gif') no-repeat; }
+#loginbuttons ul li.left { background: url('/images/wrath/login-bot-left.gif') no-repeat; }
+#logoutbuttons ul li.logout { background: url('/images/wrath//en_US/login-bot-logout.gif') no-repeat; }
+#logoutbuttons ul li.options { background: url('/images/wrath/en_US/login-bot-options.gif') no-repeat; }
+#loginbuttons { background: url('/images/wrath/login-bot-tile.gif') repeat-x bottom; }
+#user { background: url('/images/wrath/login-bg.gif') no-repeat; }
+#user div.top { background: url('/images/wrath/login-top.gif') no-repeat; }
+#logoutbuttons ul li.left { background: url('/images/wrath/login-bot-left.gif') no-repeat; }
+#logoutbuttons ul li.mid { background: url('/images/wrath/login-bot-mid.gif') no-repeat; }
+#logoutbuttons ul li.right { background: url('/images/wrath/login-bot-right') no-repeat; }
+#logoutbuttons { background: url('/images/wrath/login-bot-tile.gif') repeat-x bottom; }
+#forumHead ul { background: url('/images/wrath/en_US/header-blank.gif') no-repeat; height: 95px; }
+#forumHead li.title a.index:active,#forumHead li.title a.index:visited,#forumHead li.title a.index { font:12px/18px Georgia, "Times New Roman", serif;color:#ffb019 }
+#forumHead .icon { background: url('/images/wrath/wow-base-wrath.gif') no-repeat; }
+#login,#user {background-repeat:no-repeat !important;background-position:0 15px !important;}
+#logoutbuttons div.iconPosition {top: -23px; left: 69px;  }
+.tbottom,.forum-index {background: url('/images/wrath/forumliner-bg2.gif') repeat-x;}
+#user {height:100px}
+#login div.textfields { margin: 0 0 0 25px;}
+#login span { font:14px/20px Georgia, "Times New Roman", Times, serif;color:#c3e0f9}
+#portrait div.shell {margin: 7px 0 0 25px;}
+#user div.body { width: 120px; }
+#topicheader { background: url('/images/wrath/topic-bg.gif') repeat-x; }
+.admin-shortcuts { left: 100px; }
+#search {background: url('/images/wrath/forumliner-bg.gif') repeat-x }
+#search div.forum-index { background: url('/images/wrath/footer-forumindex-right-top.gif') no-repeat right  }
+#search li.a { background: url('/images/wrath/forum-menu-left.gif') no-repeat; }
+#search li.b { background: url('/images/wrath/forum-menu-search-bg.gif') no-repeat; }
+#search li.c { width: 150px; background: url('/images/wrath/forum-menu-search-right.gif') no-repeat; }
+#search li.d { background: url('/images/wrath/forum-menu-mid.gif') no-repeat; }

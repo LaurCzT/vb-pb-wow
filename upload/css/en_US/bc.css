@@ -1,0 +1,16 @@
+/* 
+Copyright 2006 Blizzard Entertainment, Inc.
+forums.worldofwarcraft.com Master CSS 
+*/
+
+body { background: #000000 url('/images/bc-tile.jpg') repeat-x 100% 0 !important; }
+h1.wow-logo { background: url('/images/wowlogo-bc.gif') no-repeat !important; height: 122px !important; }
+.logo-container { background: url('/images/decor-left-bc.gif') no-repeat left top !important; }
+.logo-right { background: url('/images/decor-right-bc.gif') no-repeat right top !important;  }
+li.alliance { background: url('/images/toggle-alliance0.gif') no-repeat !important; }
+li.horde { background: url('/images/toggle-horde0.gif') no-repeat !important; }
+li.bc { background: url('/images/toggle-bc1.gif') no-repeat 0 -1px !important; }
+.bg-theme { background: url('/images/bc-bg.jpg') no-repeat 100% 0 !important; height: 170px; }
+#postbackground { background: #000 url('/images/forum-bc-tile-left.jpg') repeat-y left top; }
+#postbackground .right { background: url('/images/forum-bc-tile-right.jpg') repeat-y right top; }
+#forumHead .icon { background: url('/images/w_forumbullets/wow-base-privatemessage.gif') no-repeat; }

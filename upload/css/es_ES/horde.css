@@ -1,0 +1,9 @@
+/* 
+Copyright 2006 Blizzard Entertainment, Inc.
+forums.worldofwarcraft.com Master CSS 
+*/
+
+body { background: #000000 url('/images/horde-tile.jpg') repeat-x !important; }
+h1.wow-logo { background: url('/images/wowlogo-orange.gif') no-repeat !important; }
+li.alliance { background: url('/images/toggle-alliance0.gif') no-repeat !important; }
+li.horde { background: url('/images/toggle-horde1.gif') no-repeat !important; }

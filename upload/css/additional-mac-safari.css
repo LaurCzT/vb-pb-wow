@@ -1,0 +1,5 @@
+/*\ Safari Form Color \*/
+
+input, textarea, input.post-subject-field, input.login-account-field, input.login-password-field, input.options-email-field, input.options-talent-field, textarea.post-message-text, textarea.options-signature-text { background: white; color: black; !important }
+textarea.post-message-text { width: 604px !important; margin: 29px 0 0 19px; height: 248px !important;  }
+textarea.options-signature-text { width: 604px;  height: 110px; }

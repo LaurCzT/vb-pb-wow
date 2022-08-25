@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<product productid="pb-wow-plugins" active="1">
+	<title>PB-WoW Plugins</title>
+	<description>Needed plugins for PB-WoW Style</description>
+	<version>1.06</version>
+	<url>http://descendantshq.org/index2.php</url>
+	<versioncheckurl />
+	<dependencies>
+		<dependency dependencytype="vbulletin" minversion="3.6.8" maxversion="" />
+	</dependencies>
+	<codes>
+		<code version="1.0">
+			<installcode><![CDATA[$db->query_write("ALTER TABLE " . TABLE_PREFIX . "forum ADD subforumcolumns TINYINT(3) UNSIGNED DEFAULT '1' NOT NULL");
+build_forum_permissions();]]></installcode>
+			<uninstallcode><![CDATA[$db->query_write("ALTER TABLE " . TABLE_PREFIX . "forum DROP subforumcolumns");
+build_forum_permissions(); $db->query("DROP TABLE IF EXISTS " . TABLE_PREFIX . "gitemstats;" );]]></uninstallcode>
+		</code>
+	</codes>
+	<templates>
+		<template name="headinclude_gitemstats" templatetype="template" date="0" username="Gryphon" version="1.00"><![CDATA[<link rel="stylesheet" href="itemstats/templates/wowhead.css" type="text/css">
+<script type="text/javascript" src="itemstats/overlib/overlib.js">
+<!-- overLIB (c) Erik Bosrup --></script>]]></template>
+		<template name="forumhome_forumbit_columncell" templatetype="template" date="0" username="PayBas" version="0.59"><![CDATA[<td align="$stylevar[left]" id="f$forum[forumid]" width="640px" valign="top">
+	<table width="100%" cellpadding="0" cellspacing="0" border="0" style="padding:10px 0 10px 0">
+		<tr valign="top">
+			<td>
+				<a href="forumdisplay.php?$session[sessionurl]f=$forum[forumid]">
+				<img src="/images/w_forumbullets/f$forum[forumid].gif" alt="" border="0" style="margin:2px 5px 5px 15px" />
+				</a>
+			</td>
+			<td width="100%">
+				<a href="forumdisplay.php?$session[sessionurl]f=$forum[forumid]"><strong>$forum[title]</strong></a>
+				<if condition="$show['forumdescription']"><div class="smallfont">$forum[description]</div></if>
+			</td>
+		</tr>
+	</table>
+</td>]]></template>
+	</templates>
+	<plugins>
+		<plugin active="1" executionorder="5">
+			<title>gIS: Itemstats - AdminCP</title>
+			<hookname>admin_global</hookname>
+			<phpcode><![CDATA[if (!defined('ITEMSTATS_LOADED') && file_exists(DIR . '/includes/functions_gitemstats.php'))
+{
+	require_once(DIR . '/includes/functions_gitemstats.php');
+}]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>gIS: Parse Text</title>
+			<hookname>bbcode_create</hookname>
+			<phpcode><![CDATA[$this->tag_list['no_option']['item']['callback'] = 'handle_external';
+$this->tag_list['no_option']['item']['external_callback'] = 'handle_bbcode_item';]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>GItemstats WYSIWYG Fix</title>
+			<hookname>bbcode_create</hookname>
+			<phpcode><![CDATA[if ($this->is_wysiwyg()) {
+	$this->unparsed_tags[] = 'item';
+}]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>gIS: Cache Templates</title>
+			<hookname>cache_templates</hookname>
+			<phpcode><![CDATA[$globaltemplates[] = 'headinclude_gitemstats';]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>WoWhead - Adds Icon to toolbar</title>
+			<hookname>editor_toolbar_end</hookname>
+			<phpcode><![CDATA[$wowhead_itemcode[twoparams] = "0";
+$wowhead_itemcode[bbcodetag] = "item";
+$wowhead_itemcode[buttonimage] = "images/buttons/item.gif";
+
+$wowhead_itemcode[alt] = "item Code Tag";
+
+$vBeditTemplate['extrabuttons'] .= "<td>
+<div class=\"imagebutton\" id=\"{$editorid}_cmd_wrap$wowhead_itemcode[twoparams]_$wowhead_itemcode[bbcodetag]\"><img
+ src=\"$wowhead_itemcode[buttonimage]\" alt=\"$wowhead_itemcode[alt]\" width=\"21\" height=\"20\" border=\"0\" /></div></td>\n";]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>gIS: Itemstats</title>
+			<hookname>global_start</hookname>
+			<phpcode><![CDATA[$vbulletin->templatecache["headinclude"] = $vbulletin->templatecache["headinclude"] . '\n' . $vbulletin->templatecache["headinclude_gitemstats"];
+
+if (!defined('ITEMSTATS_LOADED') && file_exists(DIR . '/includes/functions_gitemstats.php'))
+{
+	require_once(DIR . '/includes/functions_gitemstats.php');
+}]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>ForumHome in Columns - Template Cache</title>
+			<hookname>cache_templates</hookname>
+			<phpcode><![CDATA[if (THIS_SCRIPT == 'index')
+{
+    $globaltemplates[] = 'forumhome_forumbit_columncell';
+}]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>ForumHome in Columns - Default ammount of cols.</title>
+			<hookname>forumadmin_add_default</hookname>
+			<phpcode><![CDATA[$forum['subforumcolumns'] = 2;]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>ForumHome in Columns - Add/Edit input section</title>
+			<hookname>forumadmin_edit_form</hookname>
+			<phpcode><![CDATA[print_table_header($vbphrase['subforum_settings']);
+print_input_row($vbphrase['show_subforums_in_x_columns'], 'forum[subforumcolumns]', $forum['subforumcolumns']);]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>ForumHome in Columns - Dataman</title>
+			<hookname>forumdata_start</hookname>
+			<phpcode><![CDATA[$this->validfields['subforumcolumns'] = array(TYPE_UINT, REQ_YES);]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>Usergroup in Threadbit</title>
+			<hookname>forumdisplay_query</hookname>
+			<phpcode><![CDATA[$hook_query_fields .= ',thread_user.usergroupid, thread_user.membergroupids, thread_user.userid';
+$hook_query_joins .= 'LEFT JOIN '.TABLE_PREFIX.'user AS thread_user ON(thread.postuserid = thread_user.userid)';]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>Avatar in NavBar</title>
+			<hookname>global_start</hookname>
+			<phpcode><![CDATA[// Avatar In NavBar
+			if ($vbulletin->userinfo['avatarid'])
+			{ 
+			// using a predefined avatar 
+			$avatar = $db->query_first("SELECT avatarpath FROM " . TABLE_PREFIX . "avatar WHERE avatarid = " . $vbulletin->userinfo[avatarid] . ""); 
+			$avatarid = $avatar['avatarid']; 
+			$navbaravatar = "" . $vbulletin->options['bburl'] . "/$avatar[avatarpath]";
+			$navbaravatardiv = "frame";
+			} 
+			else 
+			{ 
+			// not using a predefined avatar, check for custom 
+			if ($avatar = $db->query_first("SELECT dateline, userid FROM " . TABLE_PREFIX . "customavatar WHERE userid = " . $vbulletin->userinfo[userid] . "")) 
+				{ 
+				// using a custom avatar 
+				$navbaravatarurl = ($vbulletin->options['usefileavatar']) ? "" . $vbulletin->options[avatarurl] . "/avatar$avatar[userid]_" . $vbulletin->userinfo[avatarrevision] . ".gif" : "" . $vbulletin->options[bburl] . "/image.php?u=" . $vbulletin->userinfo['userid'] . "&amp;dateline=" . $avatar['dateline'] . "";
+				$navbaravatar = "$navbaravatarurl";
+				$navbaravatardiv = "frame";
+				} 
+				else
+				{ 
+				// no avatar specified 
+				$nouseavatarchecked = HTML_CHECKED; 
+				$avatarchecked[0] = ''; 
+				$navbaravatar = "/images/portraits/def.gif";
+				$navbaravatardiv = "frame-no-char";
+				$navbaravatarlvl = "display:none";
+				} 
+			} 
+		// Avatar In NavBar]]></phpcode>
+		</plugin>
+		<plugin active="0" executionorder="5">
+			<title>Usergroup in PM List (not finished)</title>
+			<hookname>private_messagelist_start</hookname>
+			<phpcode><![CDATA[$hook_query_fields .= ',pm_user.usergroupid, pm_user.membergroupids, pm_user.userid';
+$hook_query_joins .= 'LEFT JOIN user AS pm_user ON(pmtext.fromuserid = pm_user.userid)';]]></phpcode>
+		</plugin>
+	</plugins>
+	<phrases>
+		<phrasetype name="vBulletin Settings" fieldname="vbsettings">
+			<phrase name="setting_gitemstats_alla_lang_order_desc" date="0" username="Gryphon" version="1.00"><![CDATA[Comma separated language priority list. Options: enUS,frFR,deDE,esES,koKR,zhCN,zhTW]]></phrase>
+			<phrase name="setting_gitemstats_alla_lang_order_title" date="0" username="Gryphon" version="1.00"><![CDATA[Allakhazam Language Priority]]></phrase>
+			<phrase name="setting_gitemstats_alla_socket_img_desc" date="0" username="Gryphon" version="1.00"><![CDATA[Sockets images path for Allakhazam items.]]></phrase>
+			<phrase name="setting_gitemstats_alla_socket_img_title" date="0" username="Gryphon" version="1.00"><![CDATA[Allakhazam Socket Image]]></phrase>
+			<phrase name="setting_gitemstats_automatic_desc" date="0" username="Gryphon" version="1.00"><![CDATA[Choose yes if you want the item stats loaded at the time of posting. Choose no if you want to require a click to gather the item stats.]]></phrase>
+			<phrase name="setting_gitemstats_automatic_title" date="0" username="Gryphon" version="1.00"><![CDATA[Automatic Search]]></phrase>
+			<phrase name="setting_gitemstats_icon_ext_desc" date="0" username="Gryphon" version="1.00"><![CDATA[The file extension of the icon images.]]></phrase>
+			<phrase name="setting_gitemstats_icon_ext_title" date="0" username="Gryphon" version="1.00"><![CDATA[Icon Extenstion]]></phrase>
+			<phrase name="setting_gitemstats_icon_store_desc" date="0" username="Gryphon" version="1.00"><![CDATA[The location of the icon images with trailing slash.]]></phrase>
+			<phrase name="setting_gitemstats_icon_store_title" date="0" username="Gryphon" version="1.00"><![CDATA[Icon Storage]]></phrase>
+			<phrase name="setting_gitemstats_itemstats_link_desc" date="0" username="Gryphon" version="1.00"><![CDATA[Display the "itemstats.free.fr" in the tooltips.]]></phrase>
+			<phrase name="setting_gitemstats_itemstats_link_title" date="0" username="Gryphon" version="1.00"><![CDATA[Itemstats Link]]></phrase>
+			<phrase name="setting_gitemstats_site_order_desc" date="0" username="Gryphon" version="1.00"><![CDATA[Comma separated site priority list. Options: wowhead,thottbot,allakhazam,judgehype,buffed,wowdbu]]></phrase>
+			<phrase name="setting_gitemstats_site_order_title" date="0" username="Gryphon" version="1.00"><![CDATA[Site Priority]]></phrase>
+			<phrase name="settinggroup_gitemstats_group1" date="0" username="Gryphon" version="1.00"><![CDATA[gItemStats]]></phrase>
+		</phrasetype>
+		<phrasetype name="Forum-Related" fieldname="forum">
+			<phrase name="show_subforums_in_x_columns" date="0" username="" version=""><![CDATA[Show Subforums in # of columns]]></phrase>
+			<phrase name="subforum_settings" date="0" username="" version=""><![CDATA[Subforum Settings]]></phrase>
+		</phrasetype>
+	</phrases>
+	<options>
+		<settinggroup name="gitemstats_group1" displayorder="60500">
+			<setting varname="gitemstats_automatic" displayorder="10">
+				<datatype>boolean</datatype>
+				<optioncode>yesno</optioncode>
+				<defaultvalue>1</defaultvalue>
+			</setting>
+			<setting varname="gitemstats_site_order" displayorder="20">
+				<datatype>free</datatype>
+				<defaultvalue>wowhead</defaultvalue>
+			</setting>
+			<setting varname="gitemstats_icon_store" displayorder="30">
+				<datatype>free</datatype>
+				<defaultvalue>./itemstats/wowhead_icons/</defaultvalue>
+			</setting>
+			<setting varname="gitemstats_icon_ext" displayorder="40">
+				<datatype>free</datatype>
+				<defaultvalue>.jpg</defaultvalue>
+			</setting>
+			<setting varname="gitemstats_alla_lang_order" displayorder="50">
+				<datatype>free</datatype>
+				<defaultvalue>enUS</defaultvalue>
+			</setting>
+			<setting varname="gitemstats_alla_socket_img" displayorder="60">
+				<datatype>free</datatype>
+				<defaultvalue>http://wow.allakhazam.com/images/</defaultvalue>
+			</setting>
+			<setting varname="gitemstats_itemstats_link" displayorder="70">
+				<datatype>boolean</datatype>
+				<optioncode>yesno</optioncode>
+				<defaultvalue>2</defaultvalue>
+			</setting>
+		</settinggroup>
+	</options>
+	<helptopics>
+	</helptopics>
+	<cronentries>
+	</cronentries>
+	<faqentries>
+	</faqentries>
+</product>
